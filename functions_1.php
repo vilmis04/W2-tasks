@@ -210,3 +210,20 @@ function lookUpItemInCategory(array $category, string $item): array {
     }
     return $result;
 }
+
+function findCategoryTarget(array $categories, string $target): array {
+    foreach ($categories as $key => $category) {
+        if ($key === $target) {
+            return $category;
+        }
+        foreach($category as $key => $subcategory) {
+            if ($key === 'categories') {
+                $returned = findCategoryTarget($subcategory, $target);
+                if (count($returned)>0) {
+                    return $returned;
+                }
+            }
+        }
+    }
+    return [];
+}

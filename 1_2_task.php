@@ -9,14 +9,15 @@ if ($argv[1] === 'get_total') {
     $totalCost = getCostFromCategories($categories);
     printTotalFromCategories($totalCount, $totalCost);
 } elseif ($argv[1] === 'total') {
-    $categoryTarget = $argv[3];
-    $categoryCount = getCountFromCategories($categories[$categoryTarget]);
-    $categoryCost = getCostFromCategories($categories[$categoryTarget]);
+    $categoryTarget = findCategoryTarget($categories, $argv[3]);
+    if ($categoryTarget === []) {
+        echo 'Category does not exist!'.PHP_EOL;
+        die;
+    }
+    $categoryCount = countItems($categoryTarget);
+    $categoryCost = costItems($categoryTarget);
     printTotalFromCategories($categoryCount, $categoryCost);
 } else {
     $shoppingList = transformUserInputToArray($argv[1]);
     printBill($categories, $shoppingList, true);
 }
-
-// functions
-
