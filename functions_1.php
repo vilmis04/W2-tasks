@@ -149,18 +149,13 @@ function getListFromCategories(array $stock, array $list): array {
     $lowStockItems = [];
 
     foreach($list as $row) {
-        // echo 'NEW ITEM -----------------------------------------------'.PHP_EOL;
         $item = $row[0];
-        // echo $item.PHP_EOL;
         $quantity = intval($row[1]);
         $itemExists = false;
         $stored = NULL;
-        foreach ($stock as $key => $category) {
-            // echo 'NEW CATEGORY -----------------------------------------------'.PHP_EOL;
-            // echo $key.PHP_EOL;
+        foreach ($stock as $category) {
 
             $result = lookUpItemInCategory($category, $item);
-            // var_dump($result);
             if ($result['itemExists']) {
                 $itemExists = true;
                 $data = $result['itemData'];
@@ -215,27 +210,3 @@ function lookUpItemInCategory(array $category, string $item): array {
     }
     return $result;
 }
-
-// function getItemDataFromSingleCategory(array $category, array $list): array {
-//     foreach($list as $row) {
-//         $item = $row[0];
-//         $quantity = intval($row[1]);
-
-//         if (array_key_exists($item, $category['items'])) {
-//             $remainingStock = $stock[$item]['count'];
-//             if ($quantity <= $remainingStock) {
-//                 $existingItems[] = [
-//                     'item' => $item,
-//                     'price' => $stock[$item]['price'],
-//                     'quantity' => $quantity
-//                 ];
-//             } else {
-//                 $lowStockItems[] = 'We only have '.$remainingStock.' '.$item.', '.'you asked for '.$quantity.' '.$item;
-//             }
-//         } else {
-//             $lowStockItems[] = 'Item '.$item.' not found in the shop!';
-//         }
-//     }
-
-//     return [];
-// }
